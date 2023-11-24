@@ -1,5 +1,5 @@
 # Saticon
-This is a Python script which decodes the raw output from a Sony DXC-M3 <a href="https://en.wikipedia.org/wiki/Video_camera_tube">Saticon</a> tube based video camera. I probed it as close to the output of the tube as I could (possibly after the first amplifier), and the script takes this raw signal plus the camera's sync signal and composes an image from it. The camea outputs <a href="https://en.wikipedia.org/wiki/480i">480i</a> interlaced video, so this cheats and resizes a single frame.</p>
+This is a Python script which decodes the raw output from a Sony DXC-M3 <a href="https://en.wikipedia.org/wiki/Video_camera_tube">Saticon</a> tube based video camera belonging to <a href="https://nicholasandre.com/">Nick Andre</a>. I probed it as close to the output of the tube as I could (possibly after the first amplifier), and the script takes this raw signal plus the camera's sync signal and composes an image from it. The camera outputs <a href="https://en.wikipedia.org/wiki/480i">480i</a> interlaced video, so this cheats and resizes a single frame.</p>
 
 <p>This camera is a marvel of 1980's hardware engineering: the signal path is obvious and most parts are analog. It also has a full repair manual with schematics, layout, and reference oscilloscope captures:</p>
 
@@ -21,9 +21,9 @@ This is a Python script which decodes the raw output from a Sony DXC-M3 <a href=
 
 <h2>Decoding</h2>
 
-<p>I didn't do any research on analog video before writing this code up while on an airplane, but I did come in with some background knowledge. I captured the aplitude and sync waveforms using my Siglent SDS1104 oscilloscope set to 5M sample depth. A 640x480 interlaced video half frame (ignoring the vertical blanking interval) has 640*240=153k pikels, so 5M sample depth is sufficient oversampling to capture everything. I could have captured two 240-line half-frames to reconstitute a 480-line frame, but I wasn't considering that the video may be interlaced at the time I took the oscilloscope captures.</p>
+<p>I didn't do any research on analog video before writing this code up while on an airplane, but I did come in with some background knowledge. I captured the amplitude and sync waveforms using my Siglent SDS1104 oscilloscope set to 5M sample depth. A 640x480 interlaced video half frame (ignoring the vertical blanking interval) has 640*240=153k pikels, so 5M sample depth is sufficient oversampling to capture everything. I could have captured two 240-line half-frames to reconstitute a 480-line frame, but I wasn't considering that the video may be interlaced at the time I took the oscilloscope captures.</p>
 
-<p>My code first finds the start of lines to determine how long a line is. Is then scans back through the data to sample pixels. I chose a 2x oversampling since the tube output is inherantly analog and effectively does the linear interpolation for you. The last step resizes the image to compensate for this being one half-frame of interlaced video and for oversampling on the x-axis.</p>
+<p>My code first finds the start of lines to determine how long a line is. It then scans back through the data to sample pixels. I chose a 2x oversampling since the tube output is inherantly analog and effectively does the linear interpolation for you. The last step resizes the image to compensate for this being one half-frame of interlaced video and for oversampling on the x-axis.</p>
 
 <p>Here's the decoded image:</p>
 
