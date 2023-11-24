@@ -17,11 +17,11 @@ This is a Python script which decodes the raw output from a Sony DXC-M3 <a href=
 
 <p>Here's the overall setup:</p>
 
+<img src="setup.jpg" alt="" style="width:400px;" class="imgholder">
+
 <h2>Decoding</h2>
 
 <p>I didn't do any research on analog video before writing this code up while on an airplane, but I did come in with some background knowledge. I captured the aplitude and sync waveforms using my Siglent SDS1104 oscilloscope set to 5M sample depth. A 640x480 interlaced video half frame (ignoring the vertical blanking interval) has 640*240=153k pikels, so 5M sample depth is sufficient oversampling to capture everything. I could have captured two 240-line half-frames to reconstitute a 480-line frame, but I wasn't considering that the video may be interlaced at the time I took the oscilloscope captures.</p>
-
-<img src="screen.jpg" alt="" style="width:400px;" class="imgholder">
 
 <p>My code first finds the start of lines to determine how long a line is. Is then scans back through the data to sample pixels. I chose a 2x oversampling since the tube output is inherantly analog and effectively does the linear interpolation for you. The last step resizes the image to compensate for this being one half-frame of interlaced video and for oversampling on the x-axis.</p>
 
